@@ -12,7 +12,7 @@ class App extends React.Component {
   constructor(props) {
     // Set state properties
     super(props);
-    this.state = {name: '', address: '', message: '', sender: '', currentAccount: ''};
+    this.state = {name: '', address: '', message: '', sender: '', currentAccount: '', transactionSent: '', transactionProcessing: ''};
 
     // Set event handlers
     this.handleName = this.handleName.bind(this);
@@ -95,14 +95,14 @@ class App extends React.Component {
 
         // Send NFT
         const waveTxn = await NFTContract.makeAnEpicNFT(metadata, this.state.address)
-
+        this.setState({transactionProcessing: 'Processing'});
         console.log("Mining...", waveTxn.hash);
 
+        // Await transaction and set state
         await waveTxn.wait();
         console.log("Mined -- ", waveTxn.hash);
-
-        //let count = await wavePortalContract.getTotalWaves();
-        //console.log("Retrieved total wave count...", count.toNumber());
+        this.setState({transactionProcessing: ''});
+        this.setState({transactionSent: 'Sent Transaction'});
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -124,32 +124,44 @@ class App extends React.Component {
         <button type="button" class="btn btn-danger" onClick={this.connectWallet}>Connect Wallet</button>
       )}
       {this.state.currentAccount && (
+      <>
         <p><b>Address: {this.state.currentAccount}</b></p>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Recipient's Name: <br />
+            <input type="text" value={this.state.name} onChange={this.handleName} />
+          </label>
+          <br /> <br />
+          <label>
+            Recipient's Address: <br />
+            <input type="text" value={this.state.address} onChange={this.handleAddress} />
+          </label>
+          <br /> <br />
+          <label>
+            Message: <br />
+            <input type="text" value={this.state.message} onChange={this.handleMessage} />
+          </label>
+          <br /> <br />
+          <label>
+            Sender's Name: <br />
+            <input type="text" value={this.state.sender} onChange={this.handleSender} />
+          </label>
+          <br /> <br />
+          <input class="btn btn-danger" type="submit" value="Submit" />
+        </form>
+      </>)}
+      {this.state.transactionProcessing && (
+        <>
+          <br />
+          <p>Minting and sending to address...</p>
+        </>
       )}
-      {this.state.currentAccount && (<form onSubmit={this.handleSubmit}>
-        <label>
-          Recipient's Name: <br />
-          <input type="text" value={this.state.name} onChange={this.handleName} />
-        </label>
-        <br /> <br />
-        <label>
-          Recipient's Address: <br />
-          <input type="text" value={this.state.address} onChange={this.handleAddress} />
-        </label>
-        <br /> <br />
-        <label>
-          Message: <br />
-          <input type="text" value={this.state.message} onChange={this.handleMessage} />
-        </label>
-        <br /> <br />
-        <label>
-          Sender's Name: <br />
-          <input type="text" value={this.state.sender} onChange={this.handleSender} />
-        </label>
-        <br /> <br />
-        <input class="btn btn-danger" type="submit" value="Submit" />
-        
-      </form>)}
+      {this.state.transactionSent && (
+        <>
+          <br />
+          <p>Transaction sent!</p>
+        </>
+      )}
       <br />
       </div>
       </div>
