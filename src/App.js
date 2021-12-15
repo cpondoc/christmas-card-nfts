@@ -2,6 +2,7 @@
 import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
 import abi from './utils/MyEpicNFT.json';
+import './App.css';
 
 // Set global variables above
 const contractAddress = '0x064656d225CfE77Ca3b9dCa23D6fB2a47A5a1121';
@@ -113,38 +114,47 @@ class App extends React.Component {
   render() {
     return (
       <>
-      <h1>Christmas NFTs</h1>
+    <div className="container">
+      <br />
+      <div className="card">
+        <div className="card-body">
+      <h1><b>🎅🏻 Christmas NFTs</b></h1>
       <p>Send one of your friends a custom Christmas NFT!</p>
-      <p>By: Chris Pondoc</p>
       {!this.state.currentAccount && (
-          <button className="waveButton" onClick={this.connectWallet}>
-            Connect Wallet
-          </button>
-        )}
-      this.state.currentAccount && <form onSubmit={this.handleSubmit}>
+        <button type="button" class="btn btn-danger" onClick={this.connectWallet}>Connect Wallet</button>
+      )}
+      {this.state.currentAccount && (
+        <p><b>Address: {this.state.currentAccount}</b></p>
+      )}
+      {this.state.currentAccount && (<form onSubmit={this.handleSubmit}>
         <label>
-          Recipient's Name:
+          Recipient's Name: <br />
           <input type="text" value={this.state.name} onChange={this.handleName} />
         </label>
         <br /> <br />
         <label>
-          Recipient's Address:
+          Recipient's Address: <br />
           <input type="text" value={this.state.address} onChange={this.handleAddress} />
         </label>
         <br /> <br />
         <label>
-          Message:
+          Message: <br />
           <input type="text" value={this.state.message} onChange={this.handleMessage} />
         </label>
         <br /> <br />
         <label>
-          Sender's Name:
+          Sender's Name: <br />
           <input type="text" value={this.state.sender} onChange={this.handleSender} />
         </label>
         <br /> <br />
-        <input type="submit" value="Submit" />
-      </form>
-      </>
+        <input class="btn btn-danger" type="submit" value="Submit" />
+        
+      </form>)}
+      <br />
+      </div>
+      </div>
+    </div>
+    </>
     );
   }
 }
