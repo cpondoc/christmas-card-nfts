@@ -63,7 +63,7 @@ class App extends React.Component {
   // Handling submits
   handleSubmit(event) {
     // Construct SVG using Base64
-    const svg_string = '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 350 350"><style>.base { fill: white; font-family: serif; font-size: 14px; }</style><rect width="100%" height="100%" fill="black" /><text x="20%" y="20%" class="base" dominant-baseline="middle" text-anchor="left">To: ' + this.state.name + '</text><text x="20%" y="40%" class="base" dominant-baseline="middle" text-anchor="left">From: ' + this.state.sender + ' </text><text x="20%" y="60%" class="base" dominant-baseline="middle" text-anchor="left">Message: ' + this.state.message + '</text></svg>'
+    const svg_string = '<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><rect x="-1.587" y="0.193" width="501.967" height="499.382" style="fill: rgb(232, 15, 15); stroke: rgba(0, 0, 0, 0);"/><text style="fill: rgb(255, 255, 255); font-family: Chalkboard; font-size: 34px; white-space: pre;" x="26.444" y="58.244">To: ' + this.state.name + '</text><text style="fill: rgb(255, 255, 255); font-family: Chalkboard; font-size: 34px; white-space: pre;" x="33.045" y="184.384">From: ' + this.state.sender + '</text><text style="fill: rgb(255, 255, 255); font-family: Chalkboard; font-size: 34px; white-space: pre;" x="29.121" y="320.996">Message: ' + this.state.message + '</text><text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 30px; white-space: pre;" x="452.54" y="37.208"></text></svg>'
     const encodedData = window.btoa(svg_string);
     console.log(encodedData);
 
@@ -119,9 +119,9 @@ class App extends React.Component {
       <div className="card">
         <div className="card-body">
       <h1><b>🎅🏻 Christmas NFTs</b></h1>
-      <p>Send one of your friends a custom Christmas NFT!</p>
+      <p>Send one of your friends a custom Christmas NFT! Check out the full collection <a href="https://rinkeby.rarible.com/collection/0x064656d225cfe77ca3b9dca23d6fb2a47a5a1121">here</a>.</p>
       {!this.state.currentAccount && (
-        <button type="button" class="btn btn-danger" onClick={this.connectWallet}>Connect Wallet</button>
+        <button type="button" className="btn btn-danger" onClick={this.connectWallet}>Connect Wallet</button>
       )}
       {this.state.currentAccount && (
       <>
@@ -147,7 +147,7 @@ class App extends React.Component {
             <input type="text" value={this.state.sender} onChange={this.handleSender} />
           </label>
           <br /> <br />
-          <input class="btn btn-danger" type="submit" value="Submit" />
+          <input className="btn btn-danger" type="submit" value="Submit" />
         </form>
       </>)}
       {this.state.transactionProcessing && (
