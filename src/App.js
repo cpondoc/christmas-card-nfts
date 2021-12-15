@@ -1,6 +1,6 @@
 // Necessary imports
 import { ethers } from "ethers";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import abi from './utils/MyEpicNFT.json';
 import './App.css';
 
